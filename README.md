@@ -7,7 +7,7 @@ This project template includes the following:
     - To setup from scratch the .gitattributes must be set
   
   - YAMLMerge version control for merting scene and prefabs - https://learn.unity.com/tutorial/working-with-yamlmerge#5feba6a2edbc2a69e6450f9e
-    - To setup from scratch rememver that Asset Serialization is not under Editor settings
+    - To setup from scratch note that Asset Serialization is now under Editor settings
     
   - Scenes : The project incldues the following default scenes
     - Start : main menu with title
