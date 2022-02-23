@@ -85,10 +85,14 @@ public class GameManager : MonoBehaviour
     [Header("SCENE SETTINGS")]
     [Tooltip("Name of the start scene")]
     public string startScene;
+    
     [Tooltip("Name of the game over scene")]
     public string gameOverScene;
+    
     [Tooltip("Count and name of each Game Level (scene)")]
     public string[] gameLevels;
+    private int gameLevelsCount;
+     
     public static int currentScene = 0; //the current level id
 
 
@@ -131,6 +135,8 @@ public class GameManager : MonoBehaviour
             if (Died && (Lives == 0)) { GameOver(); }
 
         }//end if (gameState == gameStates.Playing)
+        
+        if (nextLevel) { NextLevel(); }
 
     }
 
@@ -162,5 +168,19 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(gameOverScene); //load the game over scene
         Debug.Log("Gameover");
     }
+    
+    //go to next level
+        void NextLevel()
+    {
+        nextLevel = false;
+        
+        if (gameLevelsCount < gameLevels.Length)
+        {
+            gameLevelsCount++; 
+            SceneManager.LoadScene(gameLevels[gameLevelsCount]);
+        }
+
+
+    }//end NextLevel()
 
 }
