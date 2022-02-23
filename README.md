@@ -4,7 +4,7 @@
 This project template includes the following: 
  
  - GIT Large File Storage (LFS) capbilities : https://docs.github.com/en/repositories/working-with-files/managing-large-files/installing-git-large-file-storage
-    -- To setup from scratch the .gitattributes must be set
+    - To setup from scratch the .gitattributes must be set
   
   - YAMLMerge version control for merting scene and prefabs - https://learn.unity.com/tutorial/working-with-yamlmerge#5feba6a2edbc2a69e6450f9e
     - To setup from scratch rememver that Asset Serialization is not under Editor settings
