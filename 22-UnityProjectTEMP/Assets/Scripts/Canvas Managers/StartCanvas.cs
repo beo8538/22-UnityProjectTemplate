@@ -20,14 +20,16 @@ public class StartCanvas : MonoBehaviour
     GameManager gm; //reference to game manager
 
     [Header("Canvas SETTINGS")]
-    public Text titleTextbox;
-    public Text creditsTextbox;
-    public Text copyrightTextbox;
+    public Text titleTextbox; //textbox for the title
+    public Text creditsTextbox; //textbox for the credits
+    public Text copyrightTextbox; //textbox for the copyright
 
     private void Start()
     {
          gm = GameManager.GM; //find the game manager
-         titleTextbox.text = gm.gameTitle;
+         
+         //Set the Canvas text from GM reference
+         titleTextbox.text = gm.gameTitle; 
          creditsTextbox.text = gm.gameCredits;
          copyrightTextbox.text = gm.copyrightDate;
     }
