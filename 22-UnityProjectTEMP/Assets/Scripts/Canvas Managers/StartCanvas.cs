@@ -34,6 +34,8 @@ public class StartCanvas : MonoBehaviour
          copyrightTextbox.text = gm.copyrightDate;
     }
 
+
+
    public void GameStart()
     {
         gm.StartGame(); //refenece the StartGame method on the game manager

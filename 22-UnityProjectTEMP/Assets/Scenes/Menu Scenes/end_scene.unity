@@ -123,6 +123,68 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &95156171
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 95156173}
+  - component: {fileID: 95156172}
+  m_Layer: 0
+  m_Name: _GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &95156172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 95156171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d49296548f6742498c9896ffedace25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameTitle: Untitled Game
+  gameCredits: Made by Me
+  copyrightDate: Copyright 2022
+  recordHighScore: 1
+  defaultHighScore: 1000
+  numberOfLives: 0
+  levelLost: 0
+  defaultEndMessage: Game Over
+  looseMessage: You Loose
+  winMessage: You Win
+  endMsg: 
+  startScene: start_scene
+  gameOverScene: end_scene
+  gameLevels:
+  - level_00
+  - level_01
+  nextLevel: 0
+  gameState: 0
+  playerWon: 0
+--- !u!4 &95156173
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 95156171}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &660969369
 GameObject:
   m_ObjectHideFlags: 0
@@ -771,68 +833,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1163106615}
   m_CullTransparentMesh: 1
---- !u!1 &1197222516
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1197222518}
-  - component: {fileID: 1197222517}
-  m_Layer: 0
-  m_Name: _GameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1197222517
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1197222516}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d49296548f6742498c9896ffedace25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameTitle: Untitled Game
-  gameCredits: Made by Me
-  copyrightDate: Copyright 2022
-  endMsg: Game Over
-  canBeatLevel: 0
-  beatLevelScore: 0
-  timedLevel: 0
-  startTime: 5
-  numberOfLives: 0
-  died: 0
-  looseMessage: You Loose
-  winMessage: You Win
-  startScene: start_scene
-  gameOverScene: end_scene
-  gameLevels:
-  - level_00
-  - level_01
-  nextLevel: 0
-  gameState: 0
---- !u!4 &1197222518
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1197222516}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1325284403
 GameObject:
   m_ObjectHideFlags: 0
