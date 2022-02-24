@@ -16,13 +16,13 @@ This project template includes the following:
     - Level_01 : sample scene, second playable game level
     
   - Game Manager: The game manger is setup with the following features:
-   - General game settings
-   - Game settings: score, lives, possible beatl level and timer
-   - Game states : Idle, Playing, Death, GameOver, BeatLevel
-   - StartGame() : starts and restarts game as it sets all the defaults
-   - GameOver() : calls the game over scene 
-   - ExitGame(): exits the game 
-   - NextLevel(): loads the apporiate next game level 
+    - General game settings
+    - Game settings: score, lives, possible beatl level and timer
+    - Game states : Idle, Playing, Death, GameOver, BeatLevel
+    - StartGame() : starts and restarts game as it sets all the defaults
+    - GameOver() : calls the game over scene 
+    - ExitGame(): exits the game 
+    - NextLevel(): loads the apporiate next game level 
 
   - Canvas Manager: one for each game canvas to control the displayed content
      - StartCanvas
