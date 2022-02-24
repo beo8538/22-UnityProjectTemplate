@@ -171,18 +171,20 @@ MonoBehaviour:
   copyrightDate: Copyright 2022
   canBeatLevel: 0
   beatLevelScore: 0
+  timedLevel: 0
+  startTime: 5
   numberOfLives: 0
   died: 0
   looseMessage: You Loose
   winMessage: You Win
-  timedLevel: 0
-  startTime: 5
+  endMsg: 
   startScene: start_scene
   gameOverScene: end_scene
   gameLevels:
   - level_00
+  - level_01
+  nextLevel: 0
   gameState: 0
-  gameIsOver: 0
 --- !u!1 &660969369
 GameObject:
   m_ObjectHideFlags: 0
@@ -736,7 +738,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 600, y: 500}
+  m_AnchoredPosition: {x: 400, y: 500}
   m_SizeDelta: {x: 294, y: 80}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1163106617
@@ -783,9 +785,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 527939840}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: StartGame
+      - m_Target: {fileID: 660969374}
+        m_TargetAssemblyTypeName: StartCanvas, Assembly-CSharp
+        m_MethodName: GameStart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1027,7 +1029,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -600, y: 500}
+  m_AnchoredPosition: {x: -400, y: 500}
   m_SizeDelta: {x: 294, y: 80}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1603309861
@@ -1074,9 +1076,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 527939840}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: ExitGame
+      - m_Target: {fileID: 660969374}
+        m_TargetAssemblyTypeName: StartCanvas, Assembly-CSharp
+        m_MethodName: GameExit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

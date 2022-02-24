@@ -47,8 +47,7 @@ public class GameManager : MonoBehaviour
     public string gameTitle = "Untitled Game";  //name of the game
     public string gameCredits = "Made by Me"; //game creator(s)
     public string copyrightDate = "Copyright " + thisDay; //date cretaed
-   
-
+    
     [Header("GAME SETTINGS")]
 
     [Tooltip("Can the level be beat by a score")]
@@ -77,9 +76,10 @@ public class GameManager : MonoBehaviour
     public bool Died { get { return died; } set { died = value; } } //access to private variable died [get/set methods]
 
     [Space(10)]
+    public string defaultEndMessage = "Game Over";//the end screen message, depends on winning outcome
     public string looseMessage = "You Loose"; //Message if player looses
     public string winMessage = "You Win"; //Message if player wins
-
+    [HideInInspector] public string endMsg ;//the end screen message, depends on winning outcome
 
     [Header("SCENE SETTINGS")]
     [Tooltip("Name of the start scene")]
@@ -89,10 +89,13 @@ public class GameManager : MonoBehaviour
     public string gameOverScene;
     
     [Tooltip("Count and name of each Game Level (scene)")]
-    public string[] gameLevels;
-    private int gameLevelsCount;
+    public string[] gameLevels; //names of levels
+    private int gameLevelsCount; //what level we are on
+    private int loadLevel; //what level from the array to load
      
     public static string currentSceneName; //the current scene name;
+
+    public bool nextLevel = false; //test for next level
 
     //Game State Varaiables
     [HideInInspector] public enum gameStates { Idle, Playing, Death, GameOver, BeatLevel };//enum of game states
@@ -101,6 +104,9 @@ public class GameManager : MonoBehaviour
     //Timer Varaibles
     private float currentTime; //sets current time for timer
     private bool gameStarted = false; //test if games has started
+
+    //Win/Loose conditon
+    private bool playerWon = false;
  
    //reference to system time
    private static string thisDay = System.DateTime.Now.ToString("yyyy"); //today's date as string
@@ -115,11 +121,18 @@ public class GameManager : MonoBehaviour
         CheckGameManagerIsInScene();
 
         //store the current scene
-        currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-        Debug.Log(currentScene);
+        currentSceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        Debug.Log(currentSceneName);
 
     }//end Awake()
-    
+
+    //Start is called on the start of the scene
+    private void Start()
+    {
+        //SET ALL GENERAL GAME VARIABLES
+        endMsg = defaultEndMessage; //set the end message default
+    }
+
     //Update is called every frame
     private void Update()
     {
@@ -140,19 +153,26 @@ public class GameManager : MonoBehaviour
     }//end Update
 
 
-    //load first game level (level 1)
+    //LOAD THE GAME FOR THE FIRST TIME OR RESTART
    public void StartGame()
     {
-        SceneManager.LoadScene(gameLevels[0]); //load first game level
+        //SET ALL GAME LEVEL VARIABLES FOR START OF GAME
+
+        gameLevelsCount = 1; //set the count for the game levels
+        loadLevel = gameLevelsCount - 1; //the level from the array
+        SceneManager.LoadScene(gameLevels[loadLevel]); //load first game level
 
         gameState = gameStates.Playing; //set the game state to playing
 
         Lives = numberOfLives; //set the number of lives
         score = 0; //set starting score
+        Debug.Log("score " + score);
+        playerWon = false; //set player winning condition to false
     }//end StartGame()
 
 
-    //exit the game
+
+    //EXIT THE GAME
     public void ExitGame()
     {
         Application.Quit();
@@ -160,25 +180,30 @@ public class GameManager : MonoBehaviour
     }//end ExitGame()
 
 
-    //go to game over scene
+    //GO TO THE GAME OVER SCENE
     public void GameOver()
     {
         gameState = gameStates.GameOver; //set the game state to gameOver
+
+       if(playerWon) { endMsg = winMessage; } else { endMsg = looseMessage; } //set the end message
+
         SceneManager.LoadScene(gameOverScene); //load the game over scene
         Debug.Log("Gameover");
     }
     
     
-    //go to next level
+    //GO TO THE NEXT LEVEL
         void NextLevel()
     {
         nextLevel = false; //reset the next level
-        
+
         //as long as our level count is not more than the amount of levels
-        if (gameLevelsCount <=  gameLevels.Length)
+        if (gameLevelsCount < gameLevels.Length)
         {
-            gameLevelsCount++; 
-            SceneManager.LoadScene(gameLevels[gameLevelsCount]);
+            gameLevelsCount++; //add to level count for next level
+            loadLevel = gameLevelsCount - 1; //find the next level in the array
+            SceneManager.LoadScene(gameLevels[loadLevel]); //load next level
+
         }else{ //if we have run out of levels go to game over
             GameOver();
         } //end if (gameLevelsCount <=  gameLevels.Length)
