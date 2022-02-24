@@ -169,12 +169,11 @@ MonoBehaviour:
   gameTitle: Untitled Game
   gameCredits: Made by Me
   copyrightDate: Copyright 2022
-  canBeatLevel: 0
-  beatLevelScore: 0
-  timedLevel: 0
-  startTime: 5
-  numberOfLives: 0
-  died: 0
+  recordHighScore: 1
+  defaultHighScore: 1000
+  numberOfLives: 3
+  levelLost: 0
+  defaultEndMessage: Game Over
   looseMessage: You Loose
   winMessage: You Win
   endMsg: 
@@ -183,8 +182,10 @@ MonoBehaviour:
   gameLevels:
   - level_00
   - level_01
+  gameLevelsCount: 0
   nextLevel: 0
   gameState: 0
+  playerWon: 0
 --- !u!1 &660969369
 GameObject:
   m_ObjectHideFlags: 0
