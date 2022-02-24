@@ -15,7 +15,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement; //libraries for accessing scenes
 
-
+//GameManager required an Audio Source
+[RequireComponent (typeof(AudioSource))]
 public class GameManager : MonoBehaviour
 {
     /*** VARIABLES ***/
@@ -124,12 +125,13 @@ public class GameManager : MonoBehaviour
     {
         //SET ALL GENERAL GAME VARIABLES
         if(mainCamera == null) { mainCamera = Camera.main; } //if main camera is null set to the default main camera
-        
+
         //if background music exsists
-        if(backgroundMusicSource != null)
+        if (backgroundMusicSource != null)
         {
-            audioSource = mainCamera.GetComponent<AudioSource>();
+            audioSource = gm.GetComponent<AudioSource>();
             audioSource.clip = backgroundMusicSource;
+            audioSource.loop = true; 
             audioSource.Play();
         }
 

@@ -18,6 +18,8 @@ public class LevelManager : MonoBehaviour
 
     GameManager gm; //reference to game manager
 
+    public GameObject playerCharacter; //reference to player character
+
     [Tooltip("Can the level be beat by a score")]
     public bool canBeatLevel = false; //can the level be beat by a score
     public int beatLevelScore; // the score value to beat level
