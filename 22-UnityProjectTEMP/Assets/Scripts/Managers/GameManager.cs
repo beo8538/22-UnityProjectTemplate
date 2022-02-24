@@ -47,33 +47,32 @@ public class GameManager : MonoBehaviour
     public string gameTitle = "Untitled Game";  //name of the game
     public string gameCredits = "Made by Me"; //game creator(s)
     public string copyrightDate = "Copyright " + thisDay; //date cretaed
-    
+
     [Header("GAME SETTINGS")]
 
-    [Tooltip("Can the level be beat by a score")]
-    public bool canBeatLevel = false; //can the level be beat by a score
-    public int beatLevelScore; // the score value to beat level
-    
-    [Space(10)]
+    [Tooltip("Will the high score be recoreded")]
+    public bool recordHighScore = false; //is the High Score recorded
 
-    [Tooltip("Is the level timed")]
-    public bool timedLevel = false; //is the leve timed 
-    public float startTime = 5.0f; //time for level (if level is timed)
+    [SerializeField] //Access to private variables in editor
+    private int defaultHighScore = 1000;
+    static public int highScore = 1000; // the default High Score
+    public int HighScore { get { return highScore; } set { highScore = value; } }//access to private variable highScore [get/set methods]
+
     [Space(10)]
     
     //static vairables can not be updated in the inspector, however private serialized fileds can be
     [SerializeField] //Access to private variables in editor
     private int numberOfLives; //set number of lives in the inspector
-    public static int lives; // number of lives for player 
+    static public int lives; // number of lives for player 
     public int Lives { get { return lives; } set { lives = value; } }//access to private variable died [get/set methods]
 
-    public static int score;  //score value
+    static public int score;  //score value
     public int Score { get { return score; } set { score = value; } }//access to private variable died [get/set methods]
 
     [SerializeField] //Access to private variables in editor
-    [Tooltip("Check to test player dead functions")]
-    private bool died = false;//player has died
-    public bool Died { get { return died; } set { died = value; } } //access to private variable died [get/set methods]
+    [Tooltip("Check to test player lost the level")]
+    private bool levelLost = false;//we have lost the level (ie. player died)
+    public bool LevelLost { get { return levelLost; } set { levelLost = value; } } //access to private variable lostLevel [get/set methods]
 
     [Space(10)]
     public string defaultEndMessage = "Game Over";//the end screen message, depends on winning outcome
@@ -90,11 +89,13 @@ public class GameManager : MonoBehaviour
     
     [Tooltip("Count and name of each Game Level (scene)")]
     public string[] gameLevels; //names of levels
-    private int gameLevelsCount; //what level we are on
+    [HideInInspector]
+    public int gameLevelsCount; //what level we are on
     private int loadLevel; //what level from the array to load
      
     public static string currentSceneName; //the current scene name;
 
+    [Header("FOR TESTING")]
     public bool nextLevel = false; //test for next level
 
     //Game State Varaiables
@@ -106,6 +107,7 @@ public class GameManager : MonoBehaviour
     private bool gameStarted = false; //test if games has started
 
     //Win/Loose conditon
+    [SerializeField] //to test in inspector
     private bool playerWon = false;
  
    //reference to system time
@@ -122,18 +124,14 @@ public class GameManager : MonoBehaviour
 
         //store the current scene
         currentSceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-        Debug.Log(currentSceneName);
+        
+        //Get the saved high score
+        GetHighScore();
 
     }//end Awake()
 
-    //Start is called on the start of the scene
-    private void Start()
-    {
-        //SET ALL GENERAL GAME VARIABLES
-        endMsg = defaultEndMessage; //set the end message default
-    }
 
-    //Update is called every frame
+    // Update is called once per frame
     private void Update()
     {
         //if ESC is pressed , exit game
@@ -146,9 +144,12 @@ public class GameManager : MonoBehaviour
         if (gameState == gameStates.Playing)
         {
             //if we have died and have no more lives, go to game over
-            if (Died && (Lives == 0)) { GameOver(); }
+            if (levelLost && (lives == 0)) { GameOver(); }
 
         }//end if (gameState == gameStates.Playing)
+
+        //Check Score
+        CheckScore();
 
     }//end Update
 
@@ -164,9 +165,22 @@ public class GameManager : MonoBehaviour
 
         gameState = gameStates.Playing; //set the game state to playing
 
-        Lives = numberOfLives; //set the number of lives
+        lives = numberOfLives; //set the number of lives
         score = 0; //set starting score
-        Debug.Log("score " + score);
+
+        //set High Score
+        if (recordHighScore) //if we are recording highscore
+        {
+            //if the high score, is less than the default high score
+            if (highScore <= defaultHighScore)
+            {
+                highScore = defaultHighScore; //set the high score to defulat
+                PlayerPrefs.SetInt("HighScore", highScore); //update high score PlayerPref
+            }//end if (highScore <= defaultHighScore)
+        }//end  if (recordHighScore) 
+
+        endMsg = defaultEndMessage; //set the end message default
+
         playerWon = false; //set player winning condition to false
     }//end StartGame()
 
@@ -209,5 +223,30 @@ public class GameManager : MonoBehaviour
         } //end if (gameLevelsCount <=  gameLevels.Length)
 
     }//end NextLevel()
+
+    void CheckScore()
+    { //This method manages the score on update. Right now it just checks if we are greater than the high score.
+  
+        //if the score is more than the high score
+        if (score > highScore)
+        { 
+            highScore = score; //set the high score to the current score
+           PlayerPrefs.SetInt("HighScore", highScore); //set the playerPref for the high score
+        }//end if(score > highScore)
+
+    }//end CheckScore()
+
+    void GetHighScore()
+    {//Get the saved highscore
+ 
+        //if the PlayerPref alredy exists for the high score
+        if (PlayerPrefs.HasKey("HighScore"))
+        {
+            Debug.Log("Has Key");
+            highScore = PlayerPrefs.GetInt("HighScore"); //set the high score to the saved high score
+        }//end if (PlayerPrefs.HasKey("HighScore"))
+
+        PlayerPrefs.SetInt("HighScore", highScore); //set the playerPref for the high score
+    }//end GetHighScore()
 
 }
