@@ -22,7 +22,7 @@ public class EndCanvas : MonoBehaviour
     [Header("Canvas SETTINGS")]
     public Text endMsgTextbox; //textbox for the title
 
-
+    // Start is called before the first frame update
     private void Start()
     {
         gm = GameManager.GM; //find the game manager

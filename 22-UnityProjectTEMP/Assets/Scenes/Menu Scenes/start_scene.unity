@@ -173,6 +173,7 @@ MonoBehaviour:
   defaultHighScore: 1000
   numberOfLives: 3
   levelLost: 0
+  backgroundMusicSource: {fileID: 8300000, guid: 141447ad43433734c844c50be983d955, type: 3}
   defaultEndMessage: Game Over
   looseMessage: You Loose
   winMessage: You Win

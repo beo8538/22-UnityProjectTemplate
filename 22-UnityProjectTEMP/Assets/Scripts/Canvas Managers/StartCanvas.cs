@@ -23,7 +23,8 @@ public class StartCanvas : MonoBehaviour
     public Text titleTextbox; //textbox for the title
     public Text creditsTextbox; //textbox for the credits
     public Text copyrightTextbox; //textbox for the copyright
-
+    
+    // Start is called before the first frame update
     private void Start()
     {
          gm = GameManager.GM; //find the game manager

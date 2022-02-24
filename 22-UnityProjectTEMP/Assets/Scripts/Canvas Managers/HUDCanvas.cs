@@ -32,6 +32,7 @@ public class HUDCanvas : MonoBehaviour
     private int score;
     private int highscore;
 
+    // Start is called before the first frame update
     private void Start()
     {
         gm = GameManager.GM; //find the game manager

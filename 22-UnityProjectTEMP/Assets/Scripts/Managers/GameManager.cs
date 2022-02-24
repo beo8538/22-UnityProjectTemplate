@@ -3,7 +3,7 @@
  * Date Created: Feb 23, 2022
  * 
  * Last Edited by: NA
- * Last Edited: Feb 23, 2022
+ * Last Edited: Feb 24, 2022
  * 
  * Description: Basic GameManager Template
 ****/
@@ -16,7 +16,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement; //libraries for accessing scenes
 
 //GameManager required an Audio Source
-[RequireComponent (typeof(AudioSource))]
+[RequireComponent(typeof(AudioSource))]
 public class GameManager : MonoBehaviour
 {
     /*** VARIABLES ***/
@@ -28,11 +28,11 @@ public class GameManager : MonoBehaviour
     //Check to make sure only one gm of the GameManager is in the scene
     void CheckGameManagerIsInScene()
     {
-    
+
         //Check if instnace is null
         if (gm == null)
         {
-           gm = this; //set gm to this gm of the game object
+            gm = this; //set gm to this gm of the game object
             Debug.Log(gm);
         }
         else //else if gm is not null a Game Manager must already exsist
@@ -50,45 +50,57 @@ public class GameManager : MonoBehaviour
     public string copyrightDate = "Copyright " + thisDay; //date cretaed
 
     [Header("GAME SETTINGS")]
-    public Camera mainCamera; //reference to main camera
+
+    [Tooltip("Will the high score be recoreded")]
+    public bool recordHighScore = false; //is the High Score recorded
+
+    [SerializeField] //Access to private variables in editor
+    private int defaultHighScore = 1000;
+    static public int highScore = 1000; // the default High Score
+    public int HighScore { get { return highScore; } set { highScore = value; } }//access to private variable highScore [get/set methods]
+
+    [Space(10)]
+
     //static vairables can not be updated in the inspector, however private serialized fileds can be
     [SerializeField] //Access to private variables in editor
     private int numberOfLives; //set number of lives in the inspector
-    public static int lives; // number of lives for player 
+    static public int lives; // number of lives for player 
     public int Lives { get { return lives; } set { lives = value; } }//access to private variable died [get/set methods]
 
-    [SerializeField] //Access to private variables in editor
-    [Tooltip("Check if the player has lost the level")]
-    private bool levelLost = false;//player has died
-    public bool LevelLost { get { return levelLost; } set { levelLost = value; } } //access to private variable died [get/set methods]
-
-    public static int score;  //score value
+    static public int score;  //score value
     public int Score { get { return score; } set { score = value; } }//access to private variable died [get/set methods]
 
+    [SerializeField] //Access to private variables in editor
+    [Tooltip("Check to test player lost the level")]
+    private bool levelLost = false;//we have lost the level (ie. player died)
+    public bool LevelLost { get { return levelLost; } set { levelLost = value; } } //access to private variable lostLevel [get/set methods]
+    
     [Space(10)]
     public AudioClip backgroundMusicSource;
     private AudioSource audioSource;
-    
+
     [Space(10)]
     public string defaultEndMessage = "Game Over";//the end screen message, depends on winning outcome
     public string looseMessage = "You Loose"; //Message if player looses
     public string winMessage = "You Win"; //Message if player wins
-    [HideInInspector] public string endMsg ;//the end screen message, depends on winning outcome
+    [HideInInspector] public string endMsg;//the end screen message, depends on winning outcome
 
     [Header("SCENE SETTINGS")]
     [Tooltip("Name of the start scene")]
     public string startScene;
-    
+
     [Tooltip("Name of the game over scene")]
     public string gameOverScene;
-    
+
     [Tooltip("Count and name of each Game Level (scene)")]
     public string[] gameLevels; //names of levels
-    private int gameLevelsCount; //what level we are on
+    [HideInInspector]
+    public int gameLevelsCount; //what level we are on
     private int loadLevel; //what level from the array to load
-     
+
     public static string currentSceneName; //the current scene name;
 
+    [Header("FOR TESTING")]
     public bool nextLevel = false; //test for next level
 
     //Game State Varaiables
@@ -100,15 +112,16 @@ public class GameManager : MonoBehaviour
     private bool gameStarted = false; //test if games has started
 
     //Win/Loose conditon
+    [SerializeField] //to test in inspector
     private bool playerWon = false;
- 
-   //reference to system time
-   private static string thisDay = System.DateTime.Now.ToString("yyyy"); //today's date as string
+
+    //reference to system time
+    private static string thisDay = System.DateTime.Now.ToString("yyyy"); //today's date as string
 
 
     /*** MEHTODS ***/
-   
-   //Awake is called when the game loads (before Start).  Awake only once during the lifetime of the script instance.
+
+    //Awake is called when the game loads (before Start).  Awake only once during the lifetime of the script instance.
     void Awake()
     {
         //runs the method to check for the GameManager
@@ -116,35 +129,33 @@ public class GameManager : MonoBehaviour
 
         //store the current scene
         currentSceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-        Debug.Log(currentSceneName);
+
+        //Get the saved high score
+        GetHighScore();
 
     }//end Awake()
-
-    //Start is called on the start of the scene
+    
+    // Start is called before the first frame update
     private void Start()
     {
-        //SET ALL GENERAL GAME VARIABLES
-        if(mainCamera == null) { mainCamera = Camera.main; } //if main camera is null set to the default main camera
 
         //if background music exsists
         if (backgroundMusicSource != null)
         {
             audioSource = gm.GetComponent<AudioSource>();
             audioSource.clip = backgroundMusicSource;
-            audioSource.loop = true; 
+            audioSource.loop = true;
             audioSource.Play();
         }
+    }//end Start()
 
 
-        endMsg = defaultEndMessage; //set the default end message
-    }
-
-    //Update is called every frame
+    // Update is called once per frame
     private void Update()
     {
         //if ESC is pressed , exit game
         if (Input.GetKey("escape")) { ExitGame(); }
-        
+
         //Check for next level
         if (nextLevel) { NextLevel(); }
 
@@ -156,11 +167,14 @@ public class GameManager : MonoBehaviour
 
         }//end if (gameState == gameStates.Playing)
 
+        //Check Score
+        CheckScore();
+
     }//end Update
 
 
     //LOAD THE GAME FOR THE FIRST TIME OR RESTART
-   public void StartGame()
+    public void StartGame()
     {
         //SET ALL GAME LEVEL VARIABLES FOR START OF GAME
 
@@ -172,7 +186,20 @@ public class GameManager : MonoBehaviour
 
         lives = numberOfLives; //set the number of lives
         score = 0; //set starting score
-        Debug.Log("score " + score);
+
+        //set High Score
+        if (recordHighScore) //if we are recording highscore
+        {
+            //if the high score, is less than the default high score
+            if (highScore <= defaultHighScore)
+            {
+                highScore = defaultHighScore; //set the high score to defulat
+                PlayerPrefs.SetInt("HighScore", highScore); //update high score PlayerPref
+            }//end if (highScore <= defaultHighScore)
+        }//end  if (recordHighScore) 
+
+        endMsg = defaultEndMessage; //set the end message default
+
         playerWon = false; //set player winning condition to false
     }//end StartGame()
 
@@ -191,18 +218,20 @@ public class GameManager : MonoBehaviour
     {
         gameState = gameStates.GameOver; //set the game state to gameOver
 
-       if(playerWon) { endMsg = winMessage; } else { endMsg = looseMessage; } //set the end message
+        if (playerWon) { endMsg = winMessage; } else { endMsg = looseMessage; } //set the end message
 
         SceneManager.LoadScene(gameOverScene); //load the game over scene
         Debug.Log("Gameover");
     }
-    
-    
-    //GO TO THE NEXT LEVEL
-        void NextLevel()
-    {
-        nextLevel = false; //reset the next level
 
+
+    //GO TO THE NEXT LEVEL
+    void NextLevel()
+    {
+        Debug.Log("next " + nextLevel);
+        nextLevel = false; //reset the next level
+        Debug.Log("next "+ nextLevel);
+        Debug.Log("gameLevelsCount" + gameLevelsCount);
         //as long as our level count is not more than the amount of levels
         if (gameLevelsCount < gameLevels.Length)
         {
@@ -210,10 +239,37 @@ public class GameManager : MonoBehaviour
             loadLevel = gameLevelsCount - 1; //find the next level in the array
             SceneManager.LoadScene(gameLevels[loadLevel]); //load next level
 
-        }else{ //if we have run out of levels go to game over
+        }
+        else
+        { //if we have run out of levels go to game over
             GameOver();
         } //end if (gameLevelsCount <=  gameLevels.Length)
 
     }//end NextLevel()
+
+    void CheckScore()
+    { //This method manages the score on update. Right now it just checks if we are greater than the high score.
+
+        //if the score is more than the high score
+        if (score > highScore)
+        {
+            highScore = score; //set the high score to the current score
+            PlayerPrefs.SetInt("HighScore", highScore); //set the playerPref for the high score
+        }//end if(score > highScore)
+
+    }//end CheckScore()
+
+    void GetHighScore()
+    {//Get the saved highscore
+
+        //if the PlayerPref alredy exists for the high score
+        if (PlayerPrefs.HasKey("HighScore"))
+        {
+            Debug.Log("Has Key");
+            highScore = PlayerPrefs.GetInt("HighScore"); //set the high score to the saved high score
+        }//end if (PlayerPrefs.HasKey("HighScore"))
+
+        PlayerPrefs.SetInt("HighScore", highScore); //set the playerPref for the high score
+    }//end GetHighScore()
 
 }
