@@ -47,34 +47,27 @@ public class GameManager : MonoBehaviour
     public string gameTitle = "Untitled Game";  //name of the game
     public string gameCredits = "Made by Me"; //game creator(s)
     public string copyrightDate = "Copyright " + thisDay; //date cretaed
-    
+
     [Header("GAME SETTINGS")]
-
-    [Tooltip("Can the level be beat by a score")]
-    public bool canBeatLevel = false; //can the level be beat by a score
-    public int beatLevelScore; // the score value to beat level
-    
-    [Space(10)]
-
-    [Tooltip("Is the level timed")]
-    public bool timedLevel = false; //is the leve timed 
-    public float startTime = 5.0f; //time for level (if level is timed)
-    [Space(10)]
-    
+    public Camera mainCamera; //reference to main camera
     //static vairables can not be updated in the inspector, however private serialized fileds can be
     [SerializeField] //Access to private variables in editor
     private int numberOfLives; //set number of lives in the inspector
     public static int lives; // number of lives for player 
     public int Lives { get { return lives; } set { lives = value; } }//access to private variable died [get/set methods]
 
+    [SerializeField] //Access to private variables in editor
+    [Tooltip("Check if the player has lost the level")]
+    private bool levelLost = false;//player has died
+    public bool LevelLost { get { return levelLost; } set { levelLost = value; } } //access to private variable died [get/set methods]
+
     public static int score;  //score value
     public int Score { get { return score; } set { score = value; } }//access to private variable died [get/set methods]
 
-    [SerializeField] //Access to private variables in editor
-    [Tooltip("Check to test player dead functions")]
-    private bool died = false;//player has died
-    public bool Died { get { return died; } set { died = value; } } //access to private variable died [get/set methods]
-
+    [Space(10)]
+    public AudioClip backgroundMusicSource;
+    private AudioSource audioSource;
+    
     [Space(10)]
     public string defaultEndMessage = "Game Over";//the end screen message, depends on winning outcome
     public string looseMessage = "You Loose"; //Message if player looses
@@ -130,7 +123,18 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         //SET ALL GENERAL GAME VARIABLES
-        endMsg = defaultEndMessage; //set the end message default
+        if(mainCamera == null) { mainCamera = Camera.main; } //if main camera is null set to the default main camera
+        
+        //if background music exsists
+        if(backgroundMusicSource != null)
+        {
+            audioSource = mainCamera.GetComponent<AudioSource>();
+            audioSource.clip = backgroundMusicSource;
+            audioSource.Play();
+        }
+
+
+        endMsg = defaultEndMessage; //set the default end message
     }
 
     //Update is called every frame
@@ -146,7 +150,7 @@ public class GameManager : MonoBehaviour
         if (gameState == gameStates.Playing)
         {
             //if we have died and have no more lives, go to game over
-            if (Died && (Lives == 0)) { GameOver(); }
+            if (levelLost && (lives == 0)) { GameOver(); }
 
         }//end if (gameState == gameStates.Playing)
 
@@ -164,7 +168,7 @@ public class GameManager : MonoBehaviour
 
         gameState = gameStates.Playing; //set the game state to playing
 
-        Lives = numberOfLives; //set the number of lives
+        lives = numberOfLives; //set the number of lives
         score = 0; //set starting score
         Debug.Log("score " + score);
         playerWon = false; //set player winning condition to false
