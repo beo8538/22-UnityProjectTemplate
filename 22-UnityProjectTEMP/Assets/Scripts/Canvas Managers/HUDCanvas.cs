@@ -2,8 +2,8 @@
  * Created by: Akram Taghavi-Burrs
  * Date Created: Feb 23, 2022
  * 
- * Last Edited by: NA
- * Last Edited: Feb 23, 2022
+ * Last Edited by: Betzaida Ortiz Rivas
+ * Last Edited: Feb 28, 2022
  * 
  * Description: Updates HUD canvas referecing game manager
 ****/
@@ -28,9 +28,9 @@ public class HUDCanvas : MonoBehaviour
     //GM Data
     private int level;
     private int totalLevels;
-    private int lives;
-    private int score;
-    private int highscore;
+    //private int lives;
+    //private int score;
+    //private int highscore;
 
     private void Start()
     {
@@ -48,24 +48,24 @@ public class HUDCanvas : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GetGameStats();
+        //GetGameStats();
         SetHUD();
     }//end Update()
 
-    void GetGameStats()
+    /**void GetGameStats()
     {
         lives = gm.Lives;
         score = gm.Score;
         highscore = gm.HighScore;
-    }
+    }**/
 
     void SetHUD()
     {
         //if texbox exsists update value
         if (levelTextbox) { levelTextbox.text = "Level " + level + "/" + totalLevels; }
-        if (livesTextbox) { livesTextbox.text = "Lives " + lives; }
-        if (scoreTextbox) { scoreTextbox.text = "Score " + score; }
-        if (highScoreTextbox) { highScoreTextbox.text = "High Score " + highscore; }
+        //if (livesTextbox) { livesTextbox.text = "Lives " + lives; }
+        //if (scoreTextbox) { scoreTextbox.text = "Score " + score; }
+        //if (highScoreTextbox) { highScoreTextbox.text = "High Score " + highscore; }
 
     }//end SetHUD()
 

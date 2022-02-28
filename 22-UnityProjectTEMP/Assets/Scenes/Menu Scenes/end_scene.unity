@@ -168,6 +168,7 @@ MonoBehaviour:
   gameLevels:
   - level_00
   - level_01
+  gameLevelsCount: 0
   nextLevel: 0
   gameState: 0
   playerWon: 0
@@ -903,7 +904,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Game Designed by : Your Name Here'
+  m_Text: 'Game Designed by : Betzaida Ortiz Rivas'
 --- !u!222 &1325284406
 CanvasRenderer:
   m_ObjectHideFlags: 0

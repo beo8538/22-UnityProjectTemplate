@@ -906,7 +906,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Game Designed by : Your Name Here'
+  m_Text: 'Game Designed by : Betzaida Ortiz Rivas'
 --- !u!222 &1325284406
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1197,7 +1197,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: GAME TITLE
+  m_Text: GET OUT...no seriously
 --- !u!222 &1603986572
 CanvasRenderer:
   m_ObjectHideFlags: 0

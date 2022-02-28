@@ -2,8 +2,8 @@
  * Created by: Akram Taghavi-Burrs
  * Date Created: Feb 23, 2022
  * 
- * Last Edited by: NA
- * Last Edited: Feb 23, 2022
+ * Last Edited by: Betzaida Ortiz Rivas
+ * Last Edited: Feb 28, 2022
  * 
  * Description: Updates start canvas referecing game manager
 ****/
@@ -33,6 +33,23 @@ public class StartCanvas : MonoBehaviour
          creditsTextbox.text = gm.gameCredits;
          copyrightTextbox.text = gm.copyrightDate;
     }
+
+    /**private IEnumerator titleText()
+    {
+        while (titleTextbox)
+        {
+            if (titleTextbox.activeInHierarchy)
+            {
+                titleTextbox.SetActive(false);
+            }
+            else
+            {
+                titleTextbox.SetActive(true);
+            }
+            yield return new WaitForSeconds(0.2f);
+        }
+        yield break;
+    }**/
 
 
 
