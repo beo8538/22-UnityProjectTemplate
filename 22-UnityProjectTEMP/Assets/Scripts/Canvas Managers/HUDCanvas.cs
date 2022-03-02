@@ -21,9 +21,10 @@ public class HUDCanvas : MonoBehaviour
 
     [Header("Canvas SETTINGS")]
     public Text levelTextbox; //textbox for level count
-    public Text livesTextbox; //textbox for the lives
+/**    public Text livesTextbox; //textbox for the lives
     public Text scoreTextbox; //textbox for the score
     public Text highScoreTextbox; //textbox for highscore
+**/
     
     //GM Data
     private int level;
