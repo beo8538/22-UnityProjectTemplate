@@ -2,8 +2,8 @@
  * Created by: Akram Taghavi-Burrs
  * Date Created: Feb 23, 2022
  * 
- * Last Edited by: NA
- * Last Edited: Feb 23, 2022
+ * Last Edited by: Betzaida Ortiz Rivas
+ * Last Edited: March 6, 2022
  * 
  * Description: Basic GameManager Template
 ****/
@@ -14,6 +14,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement; //libraries for accessing scenes
+using UnityEngine.UI;
 
 
 public class GameManager : MonoBehaviour
@@ -76,7 +77,7 @@ public class GameManager : MonoBehaviour
 
     [Space(10)]
     public string defaultEndMessage = "Game Over";//the end screen message, depends on winning outcome
-    public string looseMessage = "You Loose"; //Message if player looses
+    public string loseMessage = "You Lose"; //Message if player looses
     public string winMessage = "You Win"; //Message if player wins
     [HideInInspector] public string endMsg ;//the end screen message, depends on winning outcome
 
@@ -114,7 +115,7 @@ public class GameManager : MonoBehaviour
    private static string thisDay = System.DateTime.Now.ToString("yyyy"); //today's date as string
 
 
-    /*** MEHTODS ***/
+    /*** METHODS ***/
    
    //Awake is called when the game loads (before Start).  Awake only once during the lifetime of the script instance.
     void Awake()
@@ -199,7 +200,7 @@ public class GameManager : MonoBehaviour
     {
         gameState = gameStates.GameOver; //set the game state to gameOver
 
-       if(playerWon) { endMsg = winMessage; } else { endMsg = looseMessage; } //set the end message
+       if(playerWon) { endMsg = winMessage; } else { endMsg = loseMessage; } //set the end message
 
         SceneManager.LoadScene(gameOverScene); //load the game over scene
         Debug.Log("Gameover");

@@ -34,7 +34,8 @@ public class StartCanvas : MonoBehaviour
          copyrightTextbox.text = gm.copyrightDate;
     }
 
-    /**private IEnumerator titleText()
+    /** attempt at making flashing title text
+     * private IEnumerator titleText()
     {
         while (titleTextbox)
         {
